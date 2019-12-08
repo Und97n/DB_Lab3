@@ -2,7 +2,7 @@ from database_helper import DatabaseHelper
 from sqlalchemy.orm.exc import NoResultFound
 
 
-class BaseDao(object):
+class DBInterface(object):
 
     def __init__(self, model):
         self.database = DatabaseHelper()
@@ -10,16 +10,13 @@ class BaseDao(object):
 
     def __get_filters(self, query, columns, values):
         if not isinstance(columns, list) and not isinstance(values, list):
-            # single params, such as Book.table_name, 'Kotlin Coroutines'
             return query.filter(columns == values)
         else:
             assert (isinstance(columns, list) and isinstance(values, list))
-            # having list of params and values
             assert (columns.__len__() == values.__len__())
-            index = 0
-            for column in columns:
-                query = query.filter(column == values[index])
-                index += 1
+
+            for (column, value) in zip(columns, values):
+                query = query.filter(column == value)
             return query
 
     def __get_update_query(self, query, columns, values):
@@ -27,7 +24,6 @@ class BaseDao(object):
             return query.update({columns: values})
         else:
             assert (isinstance(columns, list) and isinstance(values, list))
-            # having list of params and values
             assert (columns.__len__() == values.__len__())
 
             index = 0
@@ -78,13 +74,14 @@ class BaseDao(object):
         query = session.query(self.model)
         query = self.__get_filters(query, columnsFind, valuesFind)
 
-        assert (query)
+        assert query
         query = self.__get_update_query(query, columnsNew, valuesNew)
 
-        assert (query)
-        session.commit()
-        print("Updated - SUCCESSFUL")
-        return True
+        if not query:
+            print("Object NOT FOUND")
+        else:
+            session.commit()
+            return True
 
     def insert(self, obj):
         session = self.database.get_session()

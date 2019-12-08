@@ -2,22 +2,17 @@ from models import *
 import sqlalchemy as db
 from sqlalchemy.orm import *
 from sqlalchemy import inspect
-from sqlalchemy import Boolean, BOOLEAN
-from sqlalchemy.exc import NoInspectionAvailable
-import utils
 
 class DatabaseHelper(object):
     # params
     __session = None
     __engine = None
 
-    #Using singleton pattern
     def __new__(cls, *args, **kwargs):
         if not hasattr(cls, '__instance'):
             cls.__instance = super(DatabaseHelper, cls).__new__(cls)
         return cls.__instance
 
-    #Using singleton pattern
     @classmethod
     def get_engine(cls):
         if cls.__engine is None:
@@ -25,7 +20,6 @@ class DatabaseHelper(object):
             print("Created database engine ", cls.__engine)
         return cls.__engine
 
-    #Using singleton pattern
     @classmethod
     def get_session(cls):
         if cls.__session is None:
@@ -39,7 +33,6 @@ class DatabaseHelper(object):
             cls.__session.close()
         print("Database session closed")
 
-    # Повертає інспектора для виконання запитів (engine - об'єкт для взаємодії з БД)
     @classmethod
     def __getInspector(cls):
         return inspect(cls.get_engine())
@@ -48,7 +41,6 @@ class DatabaseHelper(object):
     def rollback_session(cls):
         cls.get_session().rollback()
 
-    # Повертає список таблиць у БД (engine - об'єкт для взаємодії з БД)
     @classmethod
     def getListOfTables(cls):
         inspector = cls.__getInspector()
