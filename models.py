@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 
+
 class promoter(Base):
 	__tablename__ = 'promoter'
 
@@ -24,6 +25,7 @@ class promoter(Base):
 	@classmethod
 	def create(cls):
 		return promoter()
+
 
 class ad(Base):
 	__tablename__ = 'ad'
@@ -52,6 +54,7 @@ class ad(Base):
 	def create(cls):
 		return ad()
 
+
 class theme(Base):
 	__tablename__ = 'theme'
 
@@ -71,6 +74,7 @@ class theme(Base):
 	@classmethod
 	def create(cls):
 		return theme()
+
 
 class user(Base):
 	__tablename__ = 'user'
@@ -113,6 +117,7 @@ class user_theme(Base):
 	@classmethod
 	def create(cls):
 		return user_theme()
+
 
 class product(Base):
 	__tablename__ = 'product'

@@ -24,7 +24,6 @@ class BaseDao(object):
 
     def __get_update_query(self, query, columns, values):
         if not isinstance(columns, list) and not isinstance(values, list):
-            # single params, such as Book.table_name, 'Kotlin Coroutines'
             return query.update({columns: values})
         else:
             assert (isinstance(columns, list) and isinstance(values, list))
@@ -45,9 +44,9 @@ class BaseDao(object):
         return result
 
     def select(self, columns, values):
-        with self.database.get_session() as session:
-            with session.query(self.model) as query:
-                return self.__get_filters(query, columns, values).all()
+        session = self.database.get_session()
+        query = session.query(self.model)
+        return self.__get_filters(query, columns, values).all()
 
     def delete(self, columns, values):
         session = self.database.get_session()
@@ -92,6 +91,7 @@ class BaseDao(object):
         try:
             session.add(obj)
             session.commit()
+            return True
         except BaseException as exception:
             session.rollback()
             print(exception)

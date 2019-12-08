@@ -33,7 +33,7 @@ class Model(object):
 
     def insert(self, object_to_insert):
         baseDao = BaseDao(None)
-        baseDao.insert(object_to_insert)
+        return baseDao.insert(object_to_insert)
 
     def update(self, table, object_to_update, updated_object):
         model = self.getTableObject(table)
@@ -42,7 +42,7 @@ class Model(object):
         mappedFind = utils.map_keys_and_values_from_object(object_to_update)
         mappedUpdate = utils.map_keys_and_values_from_object(updated_object)
 
-        baseDao.update(mappedFind['columns'], mappedFind['values'], mappedUpdate['columns'], mappedUpdate['values'])
+        return baseDao.update(mappedFind['columns'], mappedFind['values'], mappedUpdate['columns'], mappedUpdate['values'])
 
     def delete(self, table, object_to_delete):
         model = self.getTableObject(table)
@@ -50,7 +50,7 @@ class Model(object):
 
         mapped = utils.map_keys_and_values_from_object(object_to_delete)
 
-        baseDao.delete(mapped['columns'], mapped['values'])
+        return baseDao.delete(mapped['columns'], mapped['values'])
 
     def rollback_session(self):
         DatabaseHelper.rollback_session()

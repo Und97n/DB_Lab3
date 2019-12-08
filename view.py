@@ -2,7 +2,9 @@ import pandas as pd
 import getch
 import sys
 
+
 class View(object):
+
     # Print menu entries for selection of some column from column list
     def select_column_menu(self, table_name, columns):
         print("Select some field of table '", table_name, "':", sep="")
@@ -37,11 +39,7 @@ class View(object):
                 if retval == 'back' or validator(retval):
                     return retval
                 else:
-                    if retval == 'exit':
-                        print("Bye")
-                        sys.exit(0)
-                    else:
-                        print(message_on_wrong, end=" ")
+                    print(message_on_wrong, end=" ")
             except KeyboardInterrupt:
                 print("\nInterrupted by user")
                 sys.exit()
@@ -77,21 +75,21 @@ class View(object):
         return inputed_object
 
     def print_main_menu(self, tables_names):
+        print("################################\nSELECT TABLE")
         index = 1
         for table_name in tables_names:
-            print(str(index) + ". " + str(table_name))
+            print("    " + str(index) + ". " + str(table_name))
             index += 1
 
         print()
-        print(str(index) + ". Exit")
 
     def print_table_menu(self, table_name):
-        print("TABLE", table_name)
-        print("1. SELECT ALL")
-        print("2. SELECT")
-        print("3. INSERT")
-        print("4. UPDATE")
-        print("5. DELETE")
+        print("################################\nTABLE", table_name)
+        print("    1. SELECT ALL")
+        print("    2. SELECT")
+        print("    3. INSERT")
+        print("    4. UPDATE")
+        print("    5. DELETE")
         print()
 
     def show_fetched_result(self, db_object, result):

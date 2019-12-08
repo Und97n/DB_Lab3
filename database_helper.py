@@ -1,6 +1,5 @@
 from models import *
 import sqlalchemy as db
-import credentials as credentials
 from sqlalchemy.orm import *
 from sqlalchemy import inspect
 from sqlalchemy import Boolean, BOOLEAN
@@ -22,8 +21,7 @@ class DatabaseHelper(object):
     @classmethod
     def get_engine(cls):
         if cls.__engine is None:
-            cls.__engine = engine = db.create_engine('postgresql://' + credentials.user + ':' + credentials.password + "@" +
-                                                     credentials.host + ":" + credentials.port + "/" + credentials.db_name)
+            cls.__engine = engine = db.create_engine("postgresql://postgres:postgres@localhost:5432/postgres")
             print("Created database engine ", cls.__engine)
         return cls.__engine
 
@@ -37,7 +35,8 @@ class DatabaseHelper(object):
 
     @classmethod
     def close(cls):
-        cls.get_session().close()
+        if cls.__session:
+            cls.__session.close()
         print("Database session closed")
 
     # Повертає інспектора для виконання запитів (engine - об'єкт для взаємодії з БД)
