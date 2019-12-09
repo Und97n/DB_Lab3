@@ -1,6 +1,6 @@
 from database_helper import DatabaseHelper
 from sqlalchemy.orm.exc import NoResultFound
-
+from view import View
 
 class DBInterface(object):
 
@@ -80,6 +80,8 @@ class DBInterface(object):
         if not query:
             print("Object NOT FOUND")
         else:
+            v = View()
+            v.print_and_getch("PRESS ANY KEY TO COMMIT")
             session.commit()
             return True
 
