@@ -85,11 +85,11 @@ class View(object):
 
     def print_table_menu(self, table_name):
         print("################################\nTABLE", table_name)
-        print("    1. SELECT ALL")
-        print("    2. SELECT")
-        print("    3. INSERT")
-        print("    4. UPDATE")
-        print("    5. DELETE")
+        print("    1. Select all")
+        print("    2. Select some")
+        print("    3. Insert")
+        print("    4. Update")
+        print("    5. Delete")
         print()
 
     def show_fetched_result(self, db_object, result):

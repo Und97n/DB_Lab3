@@ -2,6 +2,7 @@ from models import *
 import sqlalchemy as db
 from sqlalchemy.orm import *
 from sqlalchemy import inspect
+from sqlalchemy_schemadisplay import create_schema_graph
 
 class DatabaseHelper(object):
     # params
